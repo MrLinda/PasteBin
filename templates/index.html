@@ -25,7 +25,7 @@
         <div style="height:250px;width:20%;float:left">
         </div>
         <div style="height:250px;width:80%;float:right">
-          <form action="/add-text/" method="post" onsubmit="return check()">
+          <form action="text" method="post" onsubmit="return check()">
             {% csrf_token %}
             <textarea name="text" rows="5" cols="40"></textarea>
             <div style="height:50px">
