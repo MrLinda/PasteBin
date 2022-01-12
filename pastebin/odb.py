@@ -53,7 +53,8 @@ def search_from_index(request):
         result = database.objects.filter(index=request.GET['id'])
         # 由index查询数据库
         if result:  # 检查数据库是否有记录
-            if result[0].password == request.GET['password']:  # 检查密码
+            password = request.GET.get('password', default='d41d8cd98f00b204e9800998ecf8427e')
+            if result[0].password == password:  # 检查密码
                 if result[0].delete != -1:  # 检查阅后即焚相关数据
                     '''
                     判断是否是阅后即焚
