@@ -32,7 +32,7 @@ def add_text(request):
                 f = database.objects.filter(index=index)
             re['r'] += str(index)
             dic['index'] = index
-            re['r'] += request.POST['password']
+            re['r'] += '&password=' + request.POST['password']
 
             checkbox = request.POST.getlist('checkbox')
             for value in checkbox:  # 判断是否选择附加功能

@@ -28,6 +28,11 @@ textarea
   font-size: 250%;
 }
 
+p.link
+{
+  word-wrap:break-word;
+}
+
 p.paragraph
 {
   text-indent: 2em;

@@ -21,29 +21,31 @@
         <h2>使用方法</h2>
           <p class="paragraph">在文本框里输入文字，然后按下生成键，就可以把链接复制发给其他人了</p>
       </div>
-      <div style="height:300px;width:20%;float:left">
-      </div>
-      <div style="height:250px;width:80%;float:left">
-        <form action="/add-text/" method="post" onsubmit="return check()">
-          {% csrf_token %}
-          <textarea name="text" rows="5" cols="40"></textarea>
-          <div style="height:50px;float:left">
-            <div style="height:25px;width:20%;float:left">
-              <input type="checkbox" name="checkbox" value="1">阅后即焚
-            </div>
+      <div style="height:350px">
+        <div style="height:250px;width:20%;float:left">
+        </div>
+        <div style="height:250px;width:80%;float:right">
+          <form action="/add-text/" method="post" onsubmit="return check()">
+            {% csrf_token %}
+            <textarea name="text" rows="5" cols="40"></textarea>
+            <div style="height:50px">
+              <div style="height:25px;width:20%;float:left">
+                <input type="checkbox" name="checkbox" value="1">阅后即焚
+              </div>
 
-            <div style="height:25px;width:20%;float:left">
-              <input type="checkbox" name="checkbox" value="2">一天后失效
+              <div style="height:25px;width:20%;float:left">
+                <input type="checkbox" name="checkbox" value="2">一天后失效
+              </div>
+              <div style="height:25px;width:60%;float:left">
+                <span>密码（空为不设密码）:</span><input type="password" id="input-password">
+                <input type="hidden" id="md5-password" name="password">
+              </div>
+              <div style="height:25px;width:100%;float:left">
+                <input type="submit" value="创建链接">
+              </div>
             </div>
-            <div style="height:25px;width:60%;float:left">
-              <span>密码（空为不设密码）:</span><input type="password" id="input-password">
-              <input type="hidden" id="md5-password" name="password">
-            </div>
-            <div style="height:25px;width:100%;float:left">
-              <input type="submit" value="创建链接">
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
         <script>
           function check() {
             var pwd = document.getElementById('input-password');
@@ -52,10 +54,10 @@
             return true;
           }
         </script>
-      </div>
-      <div class="">
-        <h2>{{default}}</h2>
-        <p class="paragraph">{{ r }}</p>
+        <div class="">
+          <h2>{{default}}</h2>
+          <p class="link">{{ r }}</p>
+        </div>
       </div>
       <div class="footer">
         <p class="copyright">©2022 鲁潇潇</p>
