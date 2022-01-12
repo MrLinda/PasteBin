@@ -1,16 +1,15 @@
 import time
 import random
-from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators import csrf
 from model.models import database
 
-
+'''
 def testdb(request):
     op = database(text='23333', index=1)
     op.save()
     return HttpResponse("Save!")
-
+'''
 
 def add_text(request):
     re = {'title': 'PasteBin'}  # 返回到view的set
@@ -54,24 +53,29 @@ def search_from_index(request):
         result = database.objects.filter(index=request.GET['id'])
         # 由index查询数据库
         if result:  # 检查数据库是否有记录
-            if result[0].delete != -1:
-                '''
-                判断是否是阅后即焚
-                0：未设置
-                1：已设置
-                -1：已销毁
-                '''
-                re['text'] = result[0].text
-                if result[0].delete == 1:  # 如果设置阅后即焚就销毁
-                    result.update(delete=-1, date=int(time.time()))
-            else:  # 读取销毁时间并返回到视图
-                t = time.localtime(result[0].date)
-                re['text'] = '该消息已被销毁！（销毁时间：'+time.strftime("%Y-%m-%d %H:%M:%S", t)+'）'
-                return render(request, 'text.html', re)
-            if result[0].date:  # 判断消息是否到期（数据库中以10位时间戳存储）
-                if int(time.time()) > result[0].date:
+            if result[0].password == request.GET['password']:  # 检查密码
+                if result[0].delete != -1:  # 检查阅后即焚相关数据
+                    '''
+                    判断是否是阅后即焚
+                    0：未设置
+                    1：已设置
+                    -1：已销毁
+                    '''
+                    re['text'] = result[0].text
+                    if result[0].delete == 1:  # 如果设置阅后即焚就销毁
+                        result.update(delete=-1, date=int(time.time()))
+                else:  # 读取销毁时间并返回到视图
                     t = time.localtime(result[0].date)
-                    re['text'] = '该消息已过期！（销毁时间：'+time.strftime("%Y-%m-%d %H:%M:%S", t)+'）'
+                    re['text'] = '该消息已被销毁！（销毁时间：'+time.strftime("%Y-%m-%d %H:%M:%S", t)+'）'
+                    return render(request, 'text.html', re)
+
+                if result[0].date:  # 判断消息是否到期（数据库中以10位时间戳存储）
+                    if int(time.time()) > result[0].date:
+                        t = time.localtime(result[0].date)
+                        re['text'] = '该消息已过期！（销毁时间：'+time.strftime("%Y-%m-%d %H:%M:%S", t)+'）'
+
+            else:  # 密码错误
+                re['text'] = '密码错误！'
         else:  # 在数据库中没找到数据
             re['text'] = 'id错误，请检查是否复制失误'
     else:  # 没传入id
