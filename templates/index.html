@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!--使用md5加密-->
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+    <title>{{title}}</title>
+    <link rel="stylesheet" type='text/css' href="/static/css/default.css">
+  </head>
+  <body>
+    <div class="background">
+      <div class="header" style="background-color:;">
+        <h1>PasteBin</h1>
+      </div>
+      <div class="context">
+        <h2>介绍</h2>
+          <p class="paragraph">众所周知，在 QQ、微信里发大段文字或代码是十分折磨的。
+            比如说大段文字会让其他人阅读观感十分差，比如说在微信里你不能正常地发送一段 XML。
+            那么我们可以先将内容传上去，
+            然后生成一个网址，然后把网址发到群里给其他人访问。</p>
+        <h2>使用方法</h2>
+          <p class="paragraph">在文本框里输入文字，然后按下生成键，就可以把链接复制发给其他人了</p>
+      </div>
+      <div style="height:300px;width:20%;float:left">
+      </div>
+      <div style="height:250px;width:80%;float:left">
+        <form action="/add-text/" method="post" onsubmit="return check()">
+          {% csrf_token %}
+          <textarea name="text" rows="5" cols="40"></textarea>
+          <div style="height:50px;float:left">
+            <div style="height:25px;width:20%;float:left">
+              <input type="checkbox" name="checkbox" value="1">阅后即焚
+            </div>
+
+            <div style="height:25px;width:20%;float:left">
+              <input type="checkbox" name="checkbox" value="2">一天后失效
+            </div>
+            <div style="height:25px;width:60%;float:left">
+              <span>密码（空为不设密码）:</span><input type="password" id="input-password">
+              <input type="hidden" id="md5-password" name="password">
+            </div>
+            <div style="height:25px;width:100%;float:left">
+              <input type="submit" value="创建链接">
+            </div>
+          </div>
+        </form>
+        <script>
+          function check() {
+            var pwd = document.getElementById('input-password');
+            var md5pwd = document.getElementById('md5-password');
+            md5pwd.value = md5(pwd.value);
+            return true;
+          }
+        </script>
+      </div>
+      <div class="">
+        <h2>{{default}}</h2>
+        <p class="paragraph">{{ r }}</p>
+      </div>
+      <div class="footer">
+        <p class="copyright">©2022 鲁潇潇</p>
+      </div>
+    </div>
+  </body>
+</html>

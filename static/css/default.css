@@ -1,0 +1,41 @@
+.background
+{
+background-color:#fdf9ee;
+}
+
+.header
+{
+
+}
+
+.context
+{
+
+}
+
+.footer
+{
+  clear: both;
+}
+
+input.box
+{
+  font-size: 200%;
+}
+
+textarea
+{
+  font-size: 250%;
+}
+
+p.paragraph
+{
+  text-indent: 2em;
+  font-size:200%;
+}
+
+p.copyright
+{
+  font-size: 100%;
+  text-align: center;
+}
